@@ -1,0 +1,36 @@
+{
+  "installMethod": "unknown",
+  "autoUpdates": true,
+  "cachedStatsigGates": {
+    "tengu_disable_bypass_permissions_mode": false,
+    "tengu_tool_pear": false,
+    "tengu_web_tasks": true
+  },
+  "firstStartTime": "2025-11-30T11:34:09.645Z",
+  "userID": "8a90f159c5ec6c270692428238a1892e983e8ab7537e74661588b5b8d0089591",
+  "sonnet45MigrationComplete": true,
+  "opus45MigrationComplete": true,
+  "projects": {
+    "/app": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "exampleFiles": [
+        "I don't have enough data to provide a meaningful response. You've indicated there are files modified by the user and other users, but no actual filenames or modification counts were provided in your message.",
+        "",
+        "Please provide:",
+        "1. A list of filenames with their modification counts for files changed by the user",
+        "2. A list of filenames with their modification counts for files changed by other users",
+        "",
+        "Once you share this data, I'll analyze it and return exactly five diverse, core application logic filenames."
+      ],
+      "exampleFilesGeneratedAt": 1764502451831
+    }
+  }
+}
