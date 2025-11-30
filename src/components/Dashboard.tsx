@@ -53,86 +53,124 @@ export default function Dashboard({ onViewChange }: DashboardProps) {
   };
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-        <p className="text-muted-foreground">Welcome back! Here's your firm's overview.</p>
+    <div className="p-8 space-y-8">
+      {/* Header Section with Enhanced Typography */}
+      <div className="space-y-2">
+        <h1 className="text-4xl font-bold text-foreground tracking-tight">Dashboard</h1>
+        <p className="text-base text-muted-foreground">Welcome back! Here's your firm's overview.</p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Active Cases</CardTitle>
-            <Briefcase className="h-4 w-4 text-muted-foreground" />
+      {/* Stats Cards with Enhanced Design */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="relative overflow-hidden hover-lift border-l-4 border-l-primary">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full -mr-12 -mt-12" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+            <CardTitle className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              Active Cases
+            </CardTitle>
+            <div className="rounded-lg bg-primary/10 p-2.5">
+              <Briefcase className="h-5 w-5 text-primary" />
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{activeCases}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="space-y-1">
+            <div className="text-3xl font-bold tracking-tight">{activeCases}</div>
+            <p className="text-sm text-muted-foreground font-medium">
               {cases.length} total cases
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total Clients</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+        <Card className="relative overflow-hidden hover-lift border-l-4 border-l-info">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-[hsl(var(--info))]/5 rounded-full -mr-12 -mt-12" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+            <CardTitle className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              Total Clients
+            </CardTitle>
+            <div className="rounded-lg bg-[hsl(var(--info))]/10 p-2.5">
+              <Users className="h-5 w-5 text-[hsl(var(--info))]" />
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{totalClients}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="space-y-1">
+            <div className="text-3xl font-bold tracking-tight">{totalClients}</div>
+            <p className="text-sm text-muted-foreground font-medium">
               Active relationships
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Billable Hours</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+        <Card className="relative overflow-hidden hover-lift border-l-4 border-l-warning">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-[hsl(var(--warning))]/5 rounded-full -mr-12 -mt-12" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+            <CardTitle className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              Billable Hours
+            </CardTitle>
+            <div className="rounded-lg bg-[hsl(var(--warning))]/10 p-2.5">
+              <Clock className="h-5 w-5 text-[hsl(var(--warning))]" />
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{billableHours.toFixed(1)}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="space-y-1">
+            <div className="text-3xl font-bold tracking-tight">{billableHours.toFixed(1)}</div>
+            <p className="text-sm text-muted-foreground font-medium">
               This period
             </p>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+        <Card className="relative overflow-hidden hover-lift border-l-4 border-l-success">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-[hsl(var(--success))]/5 rounded-full -mr-12 -mt-12" />
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+            <CardTitle className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">
+              Total Revenue
+            </CardTitle>
+            <div className="rounded-lg bg-[hsl(var(--success))]/10 p-2.5">
+              <DollarSign className="h-5 w-5 text-[hsl(var(--success))]" />
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(totalRevenue)}</div>
-            <p className="text-xs text-muted-foreground">
+          <CardContent className="space-y-1">
+            <div className="text-3xl font-bold tracking-tight">{formatCurrency(totalRevenue)}</div>
+            <p className="text-sm text-muted-foreground font-medium">
               From billable hours
             </p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 mb-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Upcoming Court Dates</CardTitle>
-            <CardDescription>Your next scheduled appearances</CardDescription>
+      {/* Content Cards with Enhanced Design */}
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card className="hover-lift">
+          <CardHeader className="border-b bg-gradient-to-br from-primary/5 to-transparent">
+            <div className="flex items-center gap-2">
+              <div className="rounded-lg bg-primary/10 p-2">
+                <CalendarIcon className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <CardTitle className="text-lg">Upcoming Court Dates</CardTitle>
+                <CardDescription>Your next scheduled appearances</CardDescription>
+              </div>
+            </div>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             {upcomingCourtDates.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No upcoming court dates</p>
+              <div className="text-center py-8">
+                <CalendarIcon className="h-12 w-12 text-muted-foreground/30 mx-auto mb-3" />
+                <p className="text-sm text-muted-foreground">No upcoming court dates</p>
+              </div>
             ) : (
               <div className="space-y-4">
                 {upcomingCourtDates.map((courtDate) => {
                   const relatedCase = cases.find(c => c.id === courtDate.caseId);
                   return (
-                    <div key={courtDate.id} className="flex items-start gap-3 border-l-2 border-primary pl-3">
-                      <CalendarIcon className="h-5 w-5 text-primary mt-0.5" />
-                      <div className="flex-1">
-                        <p className="font-medium text-sm">{courtDate.title}</p>
+                    <div
+                      key={courtDate.id}
+                      className="group relative flex items-start gap-4 rounded-lg border border-border/50 p-4 transition-all hover:border-primary/50 hover:bg-accent/50"
+                    >
+                      <div className="rounded-lg bg-primary/10 p-2.5 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <CalendarIcon className="h-5 w-5 text-primary group-hover:text-primary-foreground" />
+                      </div>
+                      <div className="flex-1 space-y-1">
+                        <p className="font-semibold text-sm">{courtDate.title}</p>
                         <p className="text-sm text-muted-foreground">{relatedCase?.title}</p>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-muted-foreground font-medium">
                           {formatDate(new Date(courtDate.date))} • {courtDate.location}
                         </p>
                       </div>
@@ -141,7 +179,7 @@ export default function Dashboard({ onViewChange }: DashboardProps) {
                 })}
                 <Button
                   variant="outline"
-                  className="w-full"
+                  className="w-full mt-4 hover:bg-primary hover:text-primary-foreground transition-colors"
                   onClick={() => onViewChange('calendar')}
                 >
                   View All Court Dates
@@ -151,27 +189,39 @@ export default function Dashboard({ onViewChange }: DashboardProps) {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Cases</CardTitle>
-            <CardDescription>Recently updated case files</CardDescription>
+        <Card className="hover-lift">
+          <CardHeader className="border-b bg-gradient-to-br from-info/5 to-transparent">
+            <div className="flex items-center gap-2">
+              <div className="rounded-lg bg-[hsl(var(--info))]/10 p-2">
+                <Briefcase className="h-5 w-5 text-[hsl(var(--info))]" />
+              </div>
+              <div>
+                <CardTitle className="text-lg">Recent Cases</CardTitle>
+                <CardDescription>Recently updated case files</CardDescription>
+              </div>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
+          <CardContent className="pt-6">
+            <div className="space-y-3">
               {recentCases.map((caseItem) => {
                 const client = clients.find(c => c.id === caseItem.clientId);
                 return (
-                  <div key={caseItem.id} className="flex items-start justify-between gap-3">
-                    <div className="flex-1">
-                      <p className="font-medium text-sm">{caseItem.title}</p>
-                      <p className="text-xs text-muted-foreground">{client?.name}</p>
-                      <div className="flex gap-2 mt-2">
-                        <Badge variant={getStatusColor(caseItem.status) as any} className="text-xs">
-                          {caseItem.status}
-                        </Badge>
-                        <Badge variant={getPriorityColor(caseItem.priority) as any} className="text-xs">
-                          {caseItem.priority}
-                        </Badge>
+                  <div
+                    key={caseItem.id}
+                    className="group relative rounded-lg border border-border/50 p-4 transition-all hover:border-primary/50 hover:bg-accent/50"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 space-y-2">
+                        <p className="font-semibold text-sm">{caseItem.title}</p>
+                        <p className="text-xs text-muted-foreground">{client?.name}</p>
+                        <div className="flex flex-wrap gap-2">
+                          <Badge variant={getStatusColor(caseItem.status) as any} className="text-xs">
+                            {caseItem.status}
+                          </Badge>
+                          <Badge variant={getPriorityColor(caseItem.priority) as any} className="text-xs">
+                            {caseItem.priority}
+                          </Badge>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -179,7 +229,7 @@ export default function Dashboard({ onViewChange }: DashboardProps) {
               })}
               <Button
                 variant="outline"
-                className="w-full"
+                className="w-full mt-4 hover:bg-primary hover:text-primary-foreground transition-colors"
                 onClick={() => onViewChange('cases')}
               >
                 View All Cases

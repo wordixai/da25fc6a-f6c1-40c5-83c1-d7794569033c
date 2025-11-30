@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Plus, Search, Filter } from 'lucide-react';
+import { Plus, Search, Filter, Briefcase } from 'lucide-react';
 import { formatDate, formatCurrency } from '../lib/utils';
 import CaseDialog from './dialogs/CaseDialog';
 import CaseDetailsDialog from './dialogs/CaseDetailsDialog';
@@ -44,33 +44,35 @@ export default function CasesView() {
   };
 
   return (
-    <div className="p-8">
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Cases</h1>
-            <p className="text-muted-foreground">Manage and track all case files</p>
+    <div className="p-8 space-y-6">
+      {/* Header Section */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <h1 className="text-4xl font-bold text-foreground tracking-tight">Cases</h1>
+            <p className="text-base text-muted-foreground">Manage and track all case files</p>
           </div>
-          <Button onClick={() => setIsDialogOpen(true)}>
-            <Plus className="h-4 w-4 mr-2" />
+          <Button onClick={() => setIsDialogOpen(true)} size="lg" className="shadow-md hover:shadow-lg">
+            <Plus className="h-5 w-5 mr-2" />
             New Case
           </Button>
         </div>
 
+        {/* Search and Filter Bar */}
         <div className="flex gap-4">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
-              placeholder="Search cases..."
+              placeholder="Search cases by title or case number..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="pl-12 h-12 text-base shadow-sm"
             />
           </div>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex h-12 min-w-[180px] rounded-md border border-input bg-background px-4 py-2 text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shadow-sm"
           >
             <option value="all">All Status</option>
             <option value="open">Open</option>
@@ -81,60 +83,71 @@ export default function CasesView() {
         </div>
       </div>
 
-      <div className="grid gap-6">
+      {/* Cases List */}
+      <div className="grid gap-4">
         {filteredCases.map((caseItem) => {
           const client = clients.find(c => c.id === caseItem.clientId);
           return (
             <Card
               key={caseItem.id}
-              className="cursor-pointer hover:shadow-md transition-shadow"
+              className="cursor-pointer hover-lift group relative overflow-hidden border-l-4"
+              style={{
+                borderLeftColor: caseItem.priority === 'urgent' ? 'hsl(var(--destructive))' :
+                                 caseItem.priority === 'high' ? 'hsl(var(--warning))' :
+                                 'hsl(var(--primary))'
+              }}
               onClick={() => setSelectedCaseId(caseItem.id)}
             >
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <CardTitle className="text-xl">{caseItem.title}</CardTitle>
-                      <Badge variant={getStatusColor(caseItem.status) as any}>
-                        {caseItem.status}
-                      </Badge>
-                      <Badge variant={getPriorityColor(caseItem.priority) as any}>
-                        {caseItem.priority}
-                      </Badge>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-300" />
+
+              <CardHeader className="pb-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 space-y-3">
+                    <div className="flex items-start gap-3 flex-wrap">
+                      <CardTitle className="text-xl flex-1 min-w-0">{caseItem.title}</CardTitle>
+                      <div className="flex gap-2 shrink-0">
+                        <Badge variant={getStatusColor(caseItem.status) as any} className="shadow-sm">
+                          {caseItem.status}
+                        </Badge>
+                        <Badge variant={getPriorityColor(caseItem.priority) as any} className="shadow-sm">
+                          {caseItem.priority}
+                        </Badge>
+                      </div>
                     </div>
-                    <CardDescription>
-                      Case #{caseItem.caseNumber} • {client?.name}
+                    <CardDescription className="flex items-center gap-2">
+                      <span className="font-mono text-xs px-2 py-0.5 bg-muted rounded">#{caseItem.caseNumber}</span>
+                      <span>•</span>
+                      <span>{client?.name}</span>
                     </CardDescription>
                   </div>
                   {caseItem.estimatedValue && (
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground">Estimated Value</p>
-                      <p className="text-lg font-semibold">{formatCurrency(caseItem.estimatedValue)}</p>
+                    <div className="text-right shrink-0 bg-success/10 px-4 py-2 rounded-lg">
+                      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">Value</p>
+                      <p className="text-xl font-bold text-success">{formatCurrency(caseItem.estimatedValue)}</p>
                     </div>
                   )}
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {caseItem.description}
-                  </p>
-                  <div className="flex items-center gap-6 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Practice Area: </span>
-                      <span className="font-medium">{caseItem.practiceArea}</span>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Updated: </span>
-                      <span className="font-medium">{formatDate(caseItem.updatedAt)}</span>
-                    </div>
-                    {caseItem.courtDate && (
-                      <div>
-                        <span className="text-muted-foreground">Court Date: </span>
-                        <span className="font-medium">{formatDate(caseItem.courtDate)}</span>
-                      </div>
-                    )}
+
+              <CardContent className="space-y-4">
+                <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+                  {caseItem.description}
+                </p>
+                <div className="flex items-center gap-6 text-sm pt-2 border-t">
+                  <div className="flex items-center gap-2">
+                    <span className="text-muted-foreground">Practice Area:</span>
+                    <span className="font-semibold px-2 py-1 bg-accent rounded">{caseItem.practiceArea}</span>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-muted-foreground">Updated:</span>
+                    <span className="font-medium">{formatDate(caseItem.updatedAt)}</span>
+                  </div>
+                  {caseItem.courtDate && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-muted-foreground">Court Date:</span>
+                      <span className="font-medium text-primary">{formatDate(caseItem.courtDate)}</span>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -143,8 +156,10 @@ export default function CasesView() {
 
         {filteredCases.length === 0 && (
           <Card>
-            <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">No cases found</p>
+            <CardContent className="py-16 text-center">
+              <Briefcase className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
+              <p className="text-lg font-medium text-muted-foreground">No cases found</p>
+              <p className="text-sm text-muted-foreground mt-2">Try adjusting your search or filters</p>
             </CardContent>
           </Card>
         )}
